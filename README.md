@@ -1,4 +1,4 @@
-![Next.js SaaS Boilerplate](https://private-user-images.githubusercontent.com/12206002/439881813-1bd9b986-1093-4d65-95e0-d178013c0b13.png?jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3NDYxODEzOTEsIm5iZiI6MTc0NjE4MTA5MSwicGF0aCI6Ii8xMjIwNjAwMi80Mzk4ODE4MTMtMWJkOWI5ODYtMTA5My00ZDY1LTk1ZTAtZDE3ODAxM2MwYjEzLnBuZz9YLUFtei1BbGdvcml0aG09QVdTNC1ITUFDLVNIQTI1NiZYLUFtei1DcmVkZW50aWFsPUFLSUFWQ09EWUxTQTUzUFFLNFpBJTJGMjAyNTA1MDIlMkZ1cy1lYXN0LTElMkZzMyUyRmF3czRfcmVxdWVzdCZYLUFtei1EYXRlPTIwMjUwNTAyVDEwMTgxMVomWC1BbXotRXhwaXJlcz0zMDAmWC1BbXotU2lnbmF0dXJlPWY3ZGEwNjYzZDdlZTRjY2M0ZWRhMTIwNzNkZDhhODkzN2ZjNGVhMjBkYjQ4ZmNkNmIxMmEyZWJkZmU0MTFhZDAmWC1BbXotU2lnbmVkSGVhZGVycz1ob3N0In0.6mr9Z5iQ-drEZ_WySehJngQDNxnincUc1fszrtUUOnc)
+![SaaSLaunchpad – Next.js SaaS Starter](./SaaSLaunchpad.png)
 
 # SaaSLaunchpad Next.js SaaS Starter
 
@@ -133,3 +133,7 @@ In your Vercel project settings, add the necessary environment variables for pro
 28. `FIREBASE_ADMIN_CLIENT_EMAIL`: Firebase Admin client email.
 29. `NEXT_PUBLIC_ONESIGNAL_APP_ID`: OneSignal app ID for push notifications.
 30. `ONESIGNAL_REST_API_KEY`: OneSignal REST API key for server-side push notifications.
+
+## Managed software development services
+
+If you need managed software development services or help customizing this starter for your own SaaS, visit [excelorithm.com](https://excelorithm.com).
