@@ -33,6 +33,12 @@ function Header() {
           >
             Pricing
           </Link>
+          <Link
+            href="/blog"
+            className="text-sm font-medium text-gray-700 hover:text-gray-900"
+          >
+            Blog
+          </Link>
           {user ? (
             <DropdownMenu open={isMenuOpen} onOpenChange={setIsMenuOpen}>
               <DropdownMenuTrigger>

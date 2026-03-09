@@ -5,12 +5,15 @@ import type {
 } from "next"
 import { getServerSession as localGetServerSession } from "next-auth/next"
 import GoogleProvider from 'next-auth/providers/google';
-import { DrizzleAdapter } from "@auth/drizzle-adapter"
-import { accounts, sessions, users, verificationTokens } from "@/lib/db/schema"
-import { db } from "@/lib/db/drizzle"
+import { DrizzleAdapter } from "@auth/drizzle-adapter";
+import { accounts, users, sessions, verificationTokens } from "@/lib/db/schema";
+import { db } from "@/lib/db/drizzle";
 import type { SessionStrategy } from 'next-auth';
 import EmailProvider from "next-auth/providers/email";
+import CredentialsProvider from "next-auth/providers/credentials";
 import { addInvitedUserToTeam, createTeam, updateUser } from "../db/queries";
+import crypto from 'crypto';
+import { eq, and } from 'drizzle-orm';
 
 export const authOptions = (req?: Request) => ({
     adapter: DrizzleAdapter(db, {
@@ -34,6 +37,56 @@ export const authOptions = (req?: Request) => ({
                 }
             },
             from: process.env.EMAIL_FROM
+        }),
+        CredentialsProvider({
+            name: 'Credentials',
+            credentials: {
+                email: { label: 'Email', type: 'email' },
+                password: { label: 'Password', type: 'password' }
+            },
+            async authorize(credentials) {
+                if (!credentials?.email || !credentials?.password) {
+                    return null;
+                }
+
+                const [account] = await db
+                    .select()
+                    .from(accounts)
+                    .where(
+                        and(
+                            eq(accounts.providerAccountId, credentials.email as string),
+                            eq(accounts.provider, 'credentials')
+                        )
+                    )
+                    .limit(1);
+
+                if (!account || !account.access_token) {
+                    return null;
+                }
+
+                const passwordHash = crypto.createHash('sha256').update(credentials.password as string).digest('hex');
+
+                if (passwordHash !== account.access_token) {
+                    return null;
+                }
+
+                const [user] = await db
+                    .select()
+                    .from(users)
+                    .where(eq(users.id, account.userId))
+                    .limit(1);
+
+                if (!user) {
+                    return null;
+                }
+
+                return {
+                    id: user.id,
+                    name: user.name,
+                    email: user.email,
+                    role: user.role,
+                };
+            }
         }),
     ],
     session: {
@@ -79,9 +132,9 @@ const handleSignup = async ({ user, req }: { user: any, req?: Request }) => {
     if (!req) return;
     let inviteId, redirectUrl;
     try {
-        const signinUrl = (new URL(req.url)).searchParams.get('callbackUrl'); // Returns callbackURL for the signup page
-        redirectUrl = (new URL(signinUrl || '')).searchParams.get('callbackUrl'); // Returns callbackURL for the redirect page
-        inviteId = (new URL(redirectUrl || '')).searchParams.get('inviteId'); // Returns teamInviteId
+        const signinUrl = (new URL(req.url)).searchParams.get('callbackUrl');
+        redirectUrl = (new URL(signinUrl || '')).searchParams.get('callbackUrl');
+        inviteId = (new URL(redirectUrl || '')).searchParams.get('inviteId');
     } catch (error) {
         console.error("Error Signup redirectUrl: ", error)
     }
@@ -93,7 +146,7 @@ const handleSignup = async ({ user, req }: { user: any, req?: Request }) => {
                 role: 'owner'
             });
             await createTeam({
-                teamName: `${user.name} Team's`,
+                teamName: user.name + " Team's",
                 ownerId: user.id
             })
         } catch (error) {
