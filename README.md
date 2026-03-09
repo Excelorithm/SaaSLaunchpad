@@ -20,6 +20,12 @@ Welcome to the SaasLaunchpad! This project is designed to help you quickly build
 - 📊 User activity logging
 - ✉️ Email templates using **Nodemailer**
 - 🔔 Push notifications via **Firebase** and **OneSignal**
+- 📝 Full-featured blog system with categories, tags, and posts (`/blog`)
+- 🖊️ Rich text editor with **TipTap** for blog content creation
+- 💬 Comments system with moderation capabilities
+- 🖼️ Media management for blog images
+- 🔍 Blog search functionality
+- 🏷️ Content organization with categories and tags
 
 ## Technology Stack
 
@@ -31,6 +37,7 @@ Welcome to the SaasLaunchpad! This project is designed to help you quickly build
 - **Authentication**: [NextAuth.js](https://next-auth.js.org/)
 - **Email Service**: [Nodemailer](https://nodemailer.com/)
 - **Push Notifications**: [Firebase](https://firebase.google.com/), [OneSignal](https://onesignal.com/)
+- **Rich Text Editor**: [TipTap](https://tiptap.dev/)
 
 ## Getting Started
 
