@@ -15,6 +15,13 @@
       "when": 1741006201008,
       "tag": "0001_massive_quasar",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1772231662426,
+      "tag": "0002_careful_greymalkin",
+      "breakpoints": true
     }
   ]
 }
